@@ -227,15 +227,15 @@ def prune_tfdp(game_tfdp: GameTFDP, policies: List[SparseSeqVec]):
 						next_infosets_pruned.append(infoset.next_infosets[i])
 				# pruning done
 				# the number of actions are now reduced to the value of "count"
+				for next_seq in next_infosets_pruned:
+					traverse(next_seq, player_local) 
 				infoset.action_to_idx = action_to_idx_pruned
 				infoset.idx_to_action = idx_to_action_pruned
 				infoset.next_infosets = next_infosets_pruned
-				for i in infoset.idx_to_action:
-					traverse(infoset.next_infosets[i], player_local) 
 		except:
 			print(f"player local: {player_local}, Player Global: {player}")
 			print(f"Infoset: {infoset}, Infoset Actions: {infoset.action_to_idx}")
-			print(f"idx_to_action: {infoset.idx_to_action}")
+			print(f"policy: {dist}")
 			raise Exception
 	
 	for player in range(game_tfdp.num_players):
